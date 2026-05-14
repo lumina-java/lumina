@@ -26,7 +26,7 @@ Inspired by Laravel's clean and readable syntax.
 Anda dapat menginstall Lumina CLI secara global menggunakan cargo:
 
 ```bash
-cargo install lumina-framework
+cargo install lumina
 ```
 
 Atau jika Anda ingin menginstall dari source:
@@ -44,8 +44,8 @@ cargo install --path .
 ### 1. Buat Project Baru
 Gunakan CLI untuk membuat skeleton project baru:
 ```bash
-lumina new my-app
-cd my-app
+lumina new nama_project
+cd nama_project
 cp .env.example .env
 ```
 
