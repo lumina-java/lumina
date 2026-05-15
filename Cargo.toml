@@ -1,14 +1,15 @@
+# Standard Lumina Project Dependencies
 [package]
 name = "lumina-app"
 version = "0.1.1"
 edition = "2021"
 
 [dependencies]
-lumina-framework = { path = "../framework" }
-tokio = { version = "1.0", features = ["full"] }
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
+lumina-framework = { git = "https://github.com/lumina-java/framework.git" }
+tokio = { version = "1", features = ["full"] }
 axum = "0.7"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
 async-trait = "0.1"
 
 [[bin]]
