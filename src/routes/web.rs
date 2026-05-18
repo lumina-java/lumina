@@ -8,4 +8,9 @@ pub fn register() -> Router<AppState> {
                 "version": "0.1.0"
             })).await
         })
+        .get("/about", |state: AppState| async move {
+            state.view.render("about", serde_json::json!({
+                "app_name": "Lumina Framework"
+            })).await
+        })
 }
