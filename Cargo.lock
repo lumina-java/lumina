@@ -2148,7 +2148,7 @@ dependencies = [
 
 [[package]]
 name = "lumina-app"
-version = "0.1.0"
+version = "0.1.2"
 dependencies = [
  "async-trait",
  "axum",
@@ -2161,6 +2161,7 @@ dependencies = [
 [[package]]
 name = "lumina-framework"
 version = "0.1.0"
+source = "git+https://github.com/lumina-java/framework.git#e7febbeb226279ebfb629a4109dcc94f9e420365"
 dependencies = [
  "async-trait",
  "axum",
@@ -2206,6 +2207,7 @@ dependencies = [
 [[package]]
 name = "lumina_macros"
 version = "0.1.0"
+source = "git+https://github.com/lumina-java/framework.git#e7febbeb226279ebfb629a4109dcc94f9e420365"
 dependencies = [
  "proc-macro2",
  "quote",
