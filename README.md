@@ -1,126 +1,160 @@
-# ✨ Lumina Framework
+# 🚀 Panduan Instalasi & Penggunaan Lumina Framework (Untuk Pemula)
 
-A beautiful, fast, and elegant web framework for Rust.  
-Inspired by Laravel's clean and readable syntax.
+Selamat datang di **Lumina Framework**! Lumina adalah framework web MVC modern berbasis Rust yang menggabungkan kecepatan super cepat dan keamanan memori dari Rust dengan kemudahan dan kenyamanan pengembangan seperti Laravel.
 
----
-
-## ✨ Features
-
-- 🚀 **Fast & Efficient** — Built on Tokio + Axum, fully async
-- 🎨 **Clean Syntax** — Laravel-like fluent API with `Request` bundle
-- 🏗️ **MVC Architecture** — Controllers, Models, Services
-- 🛣️ **Elegant Routing** — Route groups, Middleware, and Param binding
-- 🪄 **Smart Scaffolding** — Full CRUD generation with fields in one command
-- 🧪 **Testing Suite** — Built-in testing with fluent assertions
-- 🗄️ **Database Layer** — SQLx, Migrations, Seeders, and Factories
-- 🎭 **Template Engine** — Tera with `.blade.rs` preprocessor and HTMX support
-- 🔐 **JWT Auth** — Full authentication scaffolding ready to use
-- 📁 **File Upload** — Multipart handling & Image manipulation
-- 🐳 **Deployment Tools** — Docker, Nginx, and Supervisor auto-scaffolding
+Panduan ini dirancang khusus untuk pemula agar dapat menginstal dan menggunakan CLI Lumina dengan mudah dan tanpa hambatan.
 
 ---
 
-## 📦 Installation
+## 📋 Prasyarat Sistem
 
-Anda dapat menginstall Lumina CLI secara global menggunakan cargo:
+Sebelum menginstal Lumina, pastikan komputer Anda telah terpasang:
+1. **Rust & Cargo** (Gunakan [Rustup](https://rustup.rs/) untuk instalasi mudah).
+2. **Git** (Diperlukan untuk inisialisasi repositori project baru).
+3. **SQLite / PostgreSQL / MySQL** (Tergantung database yang ingin Anda gunakan, SQLite adalah default).
 
+---
+
+## ⚡ Langkah 1: Menginstal Lumina Installer (`cargo-lumina`) secara Global
+
+Sama seperti Laravel yang mendukung instalasi instan melalui global installer, Lumina Framework menyediakan **Lumina Installer** resmi (`cargo-lumina`) terintegrasi langsung sebagai modul internal toolchain Rust Anda.
+
+### 🌟 Cara Instalasi
+Cukup buka terminal/PowerShell Anda dari direktori mana saja, lalu pasang CLI installer secara global:
 ```bash
-cargo install lumina
-```
-
-Atau jika Anda ingin menginstall dari source:
-
-```bash
-git clone https://github.com/lumina-java/framework.git
-cd lumina
-cargo install --path .
+cargo install cargo-lumina
 ```
 
 ---
 
-## 🚀 Quick Start
-
-### 1. Buat Project Baru
-Gunakan CLI untuk membuat skeleton project baru:
+### 🔍 Verifikasi Instalasi CLI
+Setelah proses pemasangan selesai, pastikan CLI Lumina sudah aktif dan terdaftar dengan menjalankan perintah di bawah ini:
 ```bash
-lumina new nama_project
-cd nama_project
-cp .env.example .env
+cargo lumina --help
 ```
-
-### 2. Jalankan Server
-```bash
-cargo run --bin lumina-server
-```
-
-Server berjalan di **http://127.0.0.1:8000** 🎉
+*Lumina akan menampilkan antarmuka bantuan yang sangat premium dengan daftar perintah lengkap!*
 
 ---
 
-## ⚡ Contoh Penggunaan
+## 🆕 Langkah 2: Membuat Project Baru
 
-### Smart CRUD Scaffolding
-Buat modul produk lengkap (Model, Migration, Controller, Views) dalam 1 detik:
+Setelah memasang Lumina Installer global, Anda dapat langsung membuat proyek baru Anda dengan satu perintah sederhana:
+
 ```bash
-./lumina make:crud Product name:string:required price:integer description:text
+cargo lumina new nama_project_anda
 ```
 
-### Elegant Controller Logic
-Gunakan `Request` bundle untuk akses cepat ke segalanya:
-```rust
-pub async fn store(req: Request, ValidatedForm(form): ValidatedForm<ProductRequest>) -> impl IntoResponse {
-    let mut item = Product::new();
-    item.name = form.name;
-    item.price = form.price;
-
-    let service = ProductService::new(req.db_arc());
-    match service.create_model(item).await {
-        Ok(_) => req.redirect("/products").with_success("Berhasil!").go(&req).await,
-        Err(e) => req.back().with_error("Gagal!").go(&req).await
-    }
-}
-```
-
-### Fluent Testing
-```rust
-#[tokio::test]
-async fn test_homepage_works() {
-    let client = TestClient::new().await;
-    client.get("/")
-        .send()
-        .await
-        .assert_status(200)
-        .assert_text("Selamat Datang");
-}
-```
+### Apa yang terjadi di balik layar?
+Lumina secara otomatis me-generate seluruh kerangka kerja (scaffolding) MVC secara mandiri di komputer Anda:
+- 📁 Struktur folder lengkap (`src/app/controllers`, `src/app/models`, `resources/views`, dsb).
+- ⚙️ Konfigurasi `.env` dan `.env.example` yang siap pakai.
+- 📦 File dependensi `Cargo.toml` yang menunjuk ke core framework Lumina.
+- 🐙 Inisialisasi repositori Git baru.
 
 ---
 
-## 🛠️ CLI Commands
+## 🏃 Langkah 3: Menjalankan Project
 
-| Command | Deskripsi |
+Masuk ke folder project yang baru dibuat dan jalankan servernya:
+
+```bash
+cd nama_project_anda
+cargo run
+```
+
+Buka browser Anda dan akses:
+👉 **[http://localhost:8000](http://localhost:8000)**
+
+Anda akan disambut oleh halaman **Welcome Lumina** dengan desain premium dan modern!
+
+---
+
+## 🛠️ Langkah 4: Menggunakan Fitur CLI (Scaffolding Cepat)
+
+Semua perintah pembuatan fitur CLI dapat dijalankan di dalam direktori project Anda untuk mempercepat pengembangan:
+
+### A. Membuat Controller Baru
+```bash
+lumina make:controller ProductController
+```
+*Akan membuat file di `src/app/controllers/product_controller.rs` dan otomatis mendaftarkannya di `controllers/mod.rs`.*
+
+### B. Membuat Model & Migrasi Baru
+```bash
+lumina make:model Product
+lumina make:migration create_products_table
+```
+*Membuat model di `src/app/models/product.rs` dan file SQL migrasi di `database/migrations/`.*
+
+### C. Membuat CRUD Lengkap (Model, Controller, Migrasi, View, Rute & Menu)
+```bash
+lumina make:crud Book title:string price:integer description:text
+```
+*Ini adalah fitur ajaib Lumina! Perintah ini akan langsung menghasilkan seluruh halaman CRUD lengkap yang fungsional beserta form, tabel, sidebar menu, rute, controller, dan migrasi.*
+
+### D. Membuat Sistem Autentikasi Instan (Register & Login)
+```bash
+lumina make:auth
+```
+*Ini adalah fitur praktis Lumina untuk keamanan sistem! Hanya dengan satu perintah, CLI secara otomatis melakukan seluruh alur berikut tanpa konfigurasi manual:*
+* **Membuat Halaman View:** Menghasilkan file tampilan premium untuk form **Register** dan **Login** (`resources/views/auth/`).
+* **Membuat & Mendaftarkan Controller:** Menghasilkan file `src/app/controllers/auth_controller.rs` dan mendaftarkannya otomatis di `controllers/mod.rs`.
+* **Sinkronisasi Rute Pintar:** Mendeteksi berkas rute Anda (`routes/web.rs`), menghapus rute welcome statis yang lama, dan langsung menyuntikkan rute dinamis `GET` & `POST` lengkap untuk alur Login, Register, dan Logout.
+* **Integrasi Model User:** Memeriksa dan memperbarui model database `User` (`src/app/models/user.rs`) untuk menambahkan field `role` serta method verifikasi email bawaan.
+
+*Setelah perintah selesai dijalankan, Anda hanya perlu mengetik perintah `lumina migrate` untuk memastikan tabel database siap, lalu jalankan `lumina serve` untuk langsung menguji sistem autentikasi fungsional Anda!*
+
+---
+
+## 🐳 Langkah 5: Fitur Deployment & Auto Host (Docker / Nginx / Supervisor)
+
+Lumina menyediakan automasi untuk deployment ke server produksi (auto-hosting/VPS) dengan standar industri:
+
+### 1. Auto-Config Docker
+Jalankan perintah berikut di root project:
+```bash
+lumina make:docker
+```
+*Akan menghasilkan file `Dockerfile` dan `docker-compose.yml` produksi yang terintegrasi dengan Nginx proxy, PostgreSQL, dan Redis.*
+
+Untuk menjalankannya secara kontainerisasi di VPS:
+```bash
+docker-compose up -d --build
+```
+
+### 2. Auto-Config Nginx Reverse Proxy
+Untuk mendeploy manual di server Ubuntu tanpa Docker:
+```bash
+lumina make:nginx
+```
+*Akan me-generate konfigurasi Nginx di folder `nginx/nginx.conf`. Cukup salin file ini ke `/etc/nginx/sites-available/` di VPS Anda.*
+
+### 3. Auto-Config Supervisor (Auto Restart Process)
+Agar server web Rust Anda selalu berjalan dan otomatis menyala kembali jika server restart atau crash:
+```bash
+lumina make:supervisor
+```
+*Akan menghasilkan file `supervisor/lumina.conf` yang siap Anda pasang di Supervisor daemon server VPS Anda.*
+
+---
+
+## 📚 Ringkasan Perintah CLI Global (`lumina --help`)
+
+| Perintah | Deskripsi |
 | :--- | :--- |
-| `serve` | Jalankan HTTP server |
-| `make:crud` | Generate full CRUD scaffolding (Model, Controller, Migration, Views) |
-| `make:auth` | Generate Authentication scaffolding (Register, Login, Views) |
-| `migrate` | Jalankan database migrations |
-| `db:seed` | Seed database dengan data dummy |
-| `tinker` | Interactive REPL session |
-| `make:docker` | Generate Dockerfile & docker-compose.yml |
-| `make:nginx` | Generate Nginx configuration |
-| `test:run` | Jalankan semua unit & integration tests |
+| `lumina new <name>` | Membuat project Lumina baru dari skeleton |
+| `lumina serve` | Menjalankan server aplikasi |
+| `lumina watch` | Menjalankan server dengan fitur auto-reload saat kode diubah |
+| `lumina make:controller <name>` | Membuat Controller baru dan mendaftarkannya otomatis |
+| `lumina make:model <name>` | Membuat Model database baru |
+| `lumina make:migration <name>` | Membuat file migrasi database SQL |
+| `lumina make:crud <name> [fields]`| Membuat halaman CRUD komplit secara instan |
+| `lumina make:auth` | Membuat sistem autentikasi siap pakai (Register & Login) |
+| `lumina migrate` | Menjalankan semua migrasi database yang belum diaplikasikan |
+| `lumina migrate:rollback` | Membatalkan migrasi terakhir |
+| `lumina db:seed` | Mengisi database dengan data dummy awal |
+| `lumina make:docker` | Membuat Dockerfile & docker-compose.yml produksi |
+| `lumina make:nginx` | Membuat konfigurasi Nginx reverse proxy produksi |
+| `lumina make:supervisor` | Membuat konfigurasi Supervisor daemon |
 
----
-
-## 📚 Dokumentasi Lengkap
-
-Untuk panduan detail, tutorial CRUD, konfigurasi middleware, dan referensi API lengkap:
-
-**👉 [Baca DOCUMENTATION.md](./DOCUMENTATION.md)**
-
----
-
-## 📄 License
-
-MIT — Lumina Java <admin@lumina-java.com>
+Selamat berkarya dengan **Lumina Framework**! Jika ada pertanyaan atau kendala, silakan periksa file `README.md` pada project Anda atau buka dokumentasi resmi Lumina. 🦀✨
