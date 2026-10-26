@@ -14,15 +14,24 @@
             @csrf
             <div>
                 <label class="block text-sm font-semibold text-slate-300 mb-2">Full Name</label>
-                <input type="text" name="name" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition" placeholder="John Doe" required>
+                <input type="text" name="name" value="{{ old('name') }}" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition" placeholder="John Doe" required>
+                @error('name')
+                <span class="text-xs text-rose-400 mt-1.5 block font-medium">{{ $message }}</span>
+                @enderror
             </div>
             <div>
                 <label class="block text-sm font-semibold text-slate-300 mb-2">Email Address</label>
-                <input type="email" name="email" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition" placeholder="you@example.com" required>
+                <input type="email" name="email" value="{{ old('email') }}" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition" placeholder="you@example.com" required>
+                @error('email')
+                <span class="text-xs text-rose-400 mt-1.5 block font-medium">{{ $message }}</span>
+                @enderror
             </div>
             <div>
                 <label class="block text-sm font-semibold text-slate-300 mb-2">Password</label>
                 <input type="password" name="password" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition" placeholder="••••••••" required>
+                @error('password')
+                <span class="text-xs text-rose-400 mt-1.5 block font-medium">{{ $message }}</span>
+                @enderror
             </div>
             <button type="submit" class="w-full bg-indigo-600 text-white py-3.5 rounded-xl font-bold hover:bg-indigo-500 shadow-lg shadow-indigo-600/20 transition transform active:scale-98">
                 Create Account
