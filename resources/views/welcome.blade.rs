@@ -1,304 +1,197 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to {{ app_name }}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #030712;
-            --card-bg: rgba(17, 24, 39, 0.7);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --text-primary: #f9fafb;
-            --text-secondary: #9ca3af;
-            --primary-glow: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 60%);
-            --secondary-glow: radial-gradient(circle, rgba(236, 72, 153, 0.12) 0%, transparent 60%);
-        }
+@extends('layouts.app')
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+@section('content')
+<div class="relative overflow-hidden pt-12 pb-24">
+    <!-- Ambient Glow Effects -->
+    <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-indigo-600/15 rounded-full blur-[140px] pointer-events-none"></div>
+    <div class="absolute top-[20%] right-[-10%] w-[45vw] h-[45vw] bg-pink-600/10 rounded-full blur-[140px] pointer-events-none"></div>
 
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Ambient Glows */
-        .glow-1 {
-            position: absolute;
-            top: -20%;
-            left: -10%;
-            width: 60vw;
-            height: 60vw;
-            background: var(--primary-glow);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .glow-2 {
-            position: absolute;
-            bottom: -20%;
-            right: -10%;
-            width: 60vw;
-            height: 60vw;
-            background: var(--secondary-glow);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        /* Glassmorphism Navigation */
-        header {
-            width: 100%;
-            max-width: 1200px;
-            padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 10;
-        }
-
-        .logo {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #818cf8 0%, #ec4899 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.05em;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            margin-left: 2rem;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
-
-        /* Hero Area */
-        main {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 4rem 2rem;
-            max-width: 800px;
-            z-index: 10;
-        }
-
-        .badge {
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            color: #a5b4fc;
-            padding: 0.4rem 1rem;
-            border-radius: 9999px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            animation: pulse 2s infinite alternate;
-        }
-
-        h1 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 4rem;
-            font-weight: 700;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(to right, #ffffff 30%, #a5b4fc 70%, #ec4899 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-        }
-
-        .lead {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            line-height: 1.6;
-            margin-bottom: 3rem;
-        }
-
-        /* Action Buttons */
-        .actions {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 4rem;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 0.8rem 2rem;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-            color: white;
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(99, 102, 241, 0.45);
-        }
-
-        .btn-secondary {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            color: var(--text-primary);
-            backdrop-filter: blur(10px);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        /* Features Cards Grid */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            width: 100%;
-            max-width: 900px;
-        }
-
-        @media (max-width: 768px) {
-            .features {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            padding: 2rem;
-            border-radius: 16px;
-            text-align: left;
-            backdrop-filter: blur(12px);
-            transition: all 0.3s ease;
-        }
-
-        .card:hover {
-            border-color: rgba(99, 102, 241, 0.4);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        }
-
-        .card-icon {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-        }
-
-        .card h3 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .card p {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
-
-        /* Footer */
-        footer {
-            width: 100%;
-            max-width: 1200px;
-            padding: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            z-index: 10;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        @keyframes pulse {
-            0% { opacity: 0.8; }
-            100% { opacity: 1; }
-        }
-    </style>
-</head>
-<body>
-    <div class="glow-1"></div>
-    <div class="glow-2"></div>
-
-    <header>
-        <div class="logo">Lumina</div>
-        <nav class="nav-links">
-            <a href="/">Home</a>
-            <a href="/about">About</a>
-        </nav>
-    </header>
-
-    <main>
-        <div class="badge">🚀 v{{ version }} is live</div>
-        <h1>Meet {{ app_name }}</h1>
-        <p class="lead">The Premium, Highly Ergonomic Rust Framework for Elegant & Modern Backend Developers.</p>
-
-        <div class="actions">
-            <a href="/about" class="btn btn-primary">Learn About Lumina</a>
-            <a href="https://github.com/lumina-java/framework" target="_blank" class="btn btn-secondary">Explore GitHub</a>
-        </div>
-
-        <div class="features">
-            <div class="card">
-                <div class="card-icon">🦀</div>
-                <h3>Rust Speed</h3>
-                <p>Built directly on the safest language in the world, achieving blistering speed without memory compromise.</p>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Hero Section -->
+        <div class="text-center max-w-4xl mx-auto">
+            <div class="inline-flex items-center gap-2 py-1 px-3.5 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-300 border border-indigo-500/25 mb-6 uppercase tracking-wider shadow-inner">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                <span>Lumina v{{ version }} • High-Performance Rust Backend Engine</span>
             </div>
-            <div class="card">
-                <div class="card-icon">⚡</div>
-                <h3>Axum Engine</h3>
-                <p>Fully utilizing Axum & Tokio underneath to offer production-hardened concurrent networking capabilities.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">🎨</div>
-                <h3>Blade Templates</h3>
-                <p>Expressive blade-inspired templates rendered natively on Rust for zero-cost reactive static page experiences.</p>
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-6 heading-font leading-tight">
+                The <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-400">Elegance</span> of Laravel.<br>
+                The <span class="text-white underline decoration-indigo-500 decoration-wavy decoration-2">Raw Speed</span> of Rust.
+            </h1>
+            <p class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto mb-10 leading-relaxed">
+                Lumina is a developer-first Rust web framework specifically built for modern <strong>Backend APIs</strong>, microservices, and enterprise applications. Enjoy seamless routing, unified database pooling, and rapid scaffolding.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="/api" target="_blank" class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-7 py-3.5 rounded-xl font-bold hover:shadow-lg hover:shadow-indigo-500/25 transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+                    <span>🚀 Inspect API Spec</span>
+                    <span class="text-xs bg-black/30 px-2 py-0.5 rounded-md mono-font">GET /api</span>
+                </a>
+                <a href="https://github.com/lumina-java/framework" target="_blank" class="bg-slate-900/80 text-slate-200 border border-slate-800 px-7 py-3.5 rounded-xl font-semibold hover:bg-slate-800 hover:text-white transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+                    <span>📖 Documentation</span>
+                </a>
             </div>
         </div>
-    </main>
 
-    <footer>
-        <div>© 2026 Lumina Engine. All rights reserved.</div>
-        <div>Engineered with ❤️ in Rust.</div>
-    </footer>
-</body>
-</html>
+        <!-- Telemetry Status Grid (Laravel / Lumen Health Badges) -->
+        <div class="mt-14 grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="glass-card rounded-2xl p-5 text-left">
+                <div class="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-1">Framework Version</div>
+                <div class="text-xl font-bold text-white heading-font flex items-center gap-2">
+                    <span>Lumina {{ version }}</span>
+                </div>
+                <div class="text-xs text-indigo-400 mt-1">Rust {{ rust_edition }} Edition</div>
+            </div>
+
+            <div class="glass-card rounded-2xl p-5 text-left">
+                <div class="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-1">Runtime Engine</div>
+                <div class="text-xl font-bold text-white heading-font">Axum 0.7</div>
+                <div class="text-xs text-emerald-400 mt-1">Tokio Multi-Threaded Async</div>
+            </div>
+
+            <div class="glass-card rounded-2xl p-5 text-left">
+                <div class="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-1">Database Driver</div>
+                <div class="text-xl font-bold text-white heading-font flex items-center gap-2">
+                    <span>{{ db_driver }}</span>
+                    <span class="w-2.5 h-2.5 rounded-full {% if db_status == 'connected' %}bg-emerald-400 shadow-sm shadow-emerald-400/50{% else %}bg-amber-400{% endif %}"></span>
+                </div>
+                <div class="text-xs {% if db_status == 'connected' %}text-emerald-400{% else %}text-amber-400{% endif %} mt-1 font-medium capitalize">{{ db_status }}</div>
+            </div>
+
+            <div class="glass-card rounded-2xl p-5 text-left">
+                <div class="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-1">Environment</div>
+                <div class="text-xl font-bold text-white heading-font">Local</div>
+                <div class="text-xs text-slate-400 mt-1">Debug Mode Active</div>
+            </div>
+        </div>
+
+        <!-- Dual Mode Lumen API Showcase -->
+        <div class="mt-10 bg-slate-950/80 border border-slate-800 rounded-3xl p-6 md:p-8 backdrop-blur-md shadow-2xl text-left">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800/80 pb-5 mb-6">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-pink-500/20 text-pink-300 border border-pink-500/30">Dual-Mode API</span>
+                        <h2 class="text-xl font-bold text-white heading-font">Lumen-Style Headless JSON Response</h2>
+                    </div>
+                    <p class="text-slate-400 text-sm mt-1">Kirim header <code class="mono-font bg-slate-900 text-indigo-300 px-1.5 py-0.5 rounded">Accept: application/json</code> ke URL root (<code class="mono-font text-indigo-300">/</code>) untuk langsung menerima JSON spec.</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <a href="/?format=json" target="_blank" class="text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-indigo-300 px-3 py-1.5 rounded-lg border border-slate-700 transition flex items-center gap-1.5">
+                        <span>Lihat Raw JSON</span>
+                        <span>↗</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Terminal Command -->
+                <div>
+                    <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">1. Coba Request via Terminal / cURL:</div>
+                    <div class="bg-black/90 rounded-2xl p-4 border border-slate-800 mono-font text-sm text-slate-300 relative group">
+                        <div class="flex items-center justify-between text-xs text-slate-500 pb-2 border-b border-slate-800/60 mb-3">
+                            <span>bash terminal</span>
+                            <span class="text-emerald-400 font-semibold">GET /</span>
+                        </div>
+                        <div class="overflow-x-auto text-pink-400 select-all">
+                            curl -H "Accept: application/json" http://127.0.0.1:8000/
+                        </div>
+                    </div>
+                </div>
+
+                <!-- JSON Response Preview -->
+                <div>
+                    <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">2. JSON Response yang Dihasilkan:</div>
+                    <pre class="bg-black/90 rounded-2xl p-4 border border-slate-800 mono-font text-xs text-emerald-400 overflow-x-auto leading-relaxed">
+{
+  <span class="text-slate-400">"name"</span>: <span class="text-amber-300">"Lumina Framework"</span>,
+  <span class="text-slate-400">"version"</span>: <span class="text-amber-300">"{{ version }}"</span>,
+  <span class="text-slate-400">"engine"</span>: <span class="text-amber-300">"Axum 0.7 + Tokio Async"</span>,
+  <span class="text-slate-400">"database"</span>: {
+    <span class="text-slate-400">"driver"</span>: <span class="text-amber-300">"{{ db_driver }}"</span>,
+    <span class="text-slate-400">"status"</span>: <span class="text-amber-300">"{{ db_status }}"</span>
+  },
+  <span class="text-slate-400">"documentation"</span>: <span class="text-amber-300">"https://github.com/lumina-java/framework"</span>
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Backend Capabilities Feature Cards -->
+        <div class="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+            <div class="glass-card rounded-3xl p-7 transition duration-300">
+                <div class="w-12 h-12 bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 rounded-2xl flex items-center justify-center text-2xl mb-5">
+                    🛣️
+                </div>
+                <h3 class="text-xl font-bold text-white heading-font mb-2">Dedicated API Routing</h3>
+                <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                    Pisahkan rute API dan Web dengan mudah. File <code class="mono-font bg-slate-900 text-indigo-300 px-1 rounded">src/routes/api.rs</code> otomatis diprefix dengan <code class="mono-font text-indigo-300">/api</code> lengkap dengan middleware CORS & Rate Limiter.
+                </p>
+                <a href="/api/health" target="_blank" class="text-xs font-semibold text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
+                    Cek /api/health <span>&rarr;</span>
+                </a>
+            </div>
+
+            <div class="glass-card rounded-3xl p-7 transition duration-300">
+                <div class="w-12 h-12 bg-pink-500/10 border border-pink-500/20 text-pink-400 rounded-2xl flex items-center justify-center text-2xl mb-5">
+                    🗄️
+                </div>
+                <h3 class="text-xl font-bold text-white heading-font mb-2">Unified Multi-DB Pool</h3>
+                <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                    Gunakan SQLite untuk development lokal cepat tanpa setup, lalu beralih ke <strong>PostgreSQL</strong> atau <strong>MySQL</strong> di production cukup dengan mengubah file <code class="mono-font bg-slate-900 text-indigo-300 px-1 rounded">.env</code>.
+                </p>
+                <span class="text-xs font-semibold text-pink-400 flex items-center gap-1">
+                    PostgreSQL • MySQL • SQLite
+                </span>
+            </div>
+
+            <div class="glass-card rounded-3xl p-7 transition duration-300">
+                <div class="w-12 h-12 bg-purple-500/10 border border-purple-500/20 text-purple-400 rounded-2xl flex items-center justify-center text-2xl mb-5">
+                    🪄
+                </div>
+                <h3 class="text-xl font-bold text-white heading-font mb-2">Active Record Models</h3>
+                <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                    Tulis model database semudah di Laravel Eloquent dengan makro sakti <code class="mono-font bg-slate-900 text-indigo-300 px-1 rounded">#[derive(LuminaModel)]</code>. Otomatis menyediakan <code class="mono-font text-indigo-300">all()</code>, <code class="mono-font text-indigo-300">find(id)</code>, dan CRUD.
+                </p>
+                <a href="https://github.com/lumina-java/framework#models" target="_blank" class="text-xs font-semibold text-purple-400 hover:text-purple-300 flex items-center gap-1">
+                    Pelajari Makro Model <span>&rarr;</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Quick Start Guide -->
+        <div class="mt-14 bg-slate-900/40 border border-slate-800 rounded-3xl p-8 md:p-10 text-left">
+            <h3 class="text-2xl font-bold text-white heading-font mb-6 flex items-center gap-3">
+                <span class="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-sm font-black">⚡</span>
+                <span>Cara Cepat Membuat API Endpoint Baru:</span>
+            </h3>
+
+            <div class="space-y-6">
+                <div class="flex gap-4">
+                    <div class="w-8 h-8 shrink-0 bg-indigo-500/20 text-indigo-300 rounded-full flex items-center justify-center font-bold text-sm border border-indigo-500/30">1</div>
+                    <div class="flex-grow">
+                        <div class="text-white font-semibold mb-1">Daftarkan rute di <code class="mono-font bg-slate-950 text-indigo-300 px-2 py-0.5 rounded text-sm">src/routes/api.rs</code></div>
+                        <pre class="bg-black/80 p-3.5 rounded-xl text-xs mono-font text-slate-300 overflow-x-auto border border-slate-800/80 mt-2">
+pub fn router() -> Router&lt;AppState&gt; {
+    Router::new()
+        .get("/products", get_products)
+}</pre>
+                    </div>
+                </div>
+
+                <div class="flex gap-4">
+                    <div class="w-8 h-8 shrink-0 bg-indigo-500/20 text-indigo-300 rounded-full flex items-center justify-center font-bold text-sm border border-indigo-500/30">2</div>
+                    <div class="flex-grow">
+                        <div class="text-white font-semibold mb-1">Kembalikan respons JSON dengan mudah:</div>
+                        <pre class="bg-black/80 p-3.5 rounded-xl text-xs mono-font text-slate-300 overflow-x-auto border border-slate-800/80 mt-2">
+async fn get_products() -> impl IntoResponse {
+    Json(serde_json::json!({
+        "status": "success",
+        "data": ["Rust", "Axum", "Lumina"]
+    }))
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+@endsection

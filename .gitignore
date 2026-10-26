@@ -1,4 +1,4 @@
-# Rust
+﻿# Rust
 /target/
 Cargo.lock
 
@@ -14,3 +14,7 @@ storage/cache/*
 # Database
 *.db
 *.sqlite
+
+# IDE
+.vscode/
+.idea/

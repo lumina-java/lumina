@@ -1,17 +1,39 @@
-# Standard Lumina Project Dependencies
+[workspace]
+
 [package]
 name = "lumina-app"
-version = "0.1.2"
+version = "0.3.0"
 edition = "2021"
+default-run = "lumina-server"
 
-[dependencies]
-lumina-framework = { git = "https://github.com/lumina-java/framework.git" }
-tokio = { version = "1", features = ["full"] }
-axum = "0.7"
-serde = { version = "1", features = ["derive"] }
-serde_json = "1"
-async-trait = "0.1"
+[lib]
+name = "lumina_app"
+path = "src/lib.rs"
 
 [[bin]]
 name = "lumina-server"
 path = "src/main.rs"
+
+[dependencies]
+lumina = { package = "lumina-framework", version = "0.3.0" }
+tokio = { version = "1", features = ["full"] }
+axum = { version = "0.7", features = ["macros", "multipart"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+dotenv = "0.15"
+async-trait = "0.1"
+chrono = { version = "0.4", features = ["serde"] }
+sqlx = { version = "0.8", default-features = false, features = ["runtime-tokio", "macros", "any", "chrono", "sqlite"] }
+
+[features]
+default = ["sqlite"]
+sqlite = []
+postgres = []
+mysql = []
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true

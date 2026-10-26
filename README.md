@@ -1,160 +1,71 @@
-# 🚀 Panduan Instalasi & Penggunaan Lumina Framework (Untuk Pemula)
+# ⚡ Welcome to Your Lumina Backend Application: lumina_clean
 
-Selamat datang di **Lumina Framework**! Lumina adalah framework web MVC modern berbasis Rust yang menggabungkan kecepatan super cepat dan keamanan memori dari Rust dengan kemudahan dan kenyamanan pengembangan seperti Laravel.
-
-Panduan ini dirancang khusus untuk pemula agar dapat menginstal dan menggunakan CLI Lumina dengan mudah dan tanpa hambatan.
+Selamat! Anda telah berhasil menginisialisasi project baru dengan **Lumina Framework** — Web & RESTful API framework modern berbasis Rust (Axum 0.7 & Tokio Async) yang memadukan kecepatan komputasi sistem Rust dengan elegansi dan ergonomi sintaks **Laravel** dan **Lumen**.
 
 ---
 
-## 📋 Prasyarat Sistem
+## 🚀 Menjalankan Server Lokal (Quick Start)
 
-Sebelum menginstal Lumina, pastikan komputer Anda telah terpasang:
-1. **Rust & Cargo** (Gunakan [Rustup](https://rustup.rs/) untuk instalasi mudah).
-2. **Git** (Diperlukan untuk inisialisasi repositori project baru).
-3. **SQLite / PostgreSQL / MySQL** (Tergantung database yang ingin Anda gunakan, SQLite adalah default).
-
----
-
-## ⚡ Langkah 1: Menginstal Lumina Installer (`cargo-lumina`) secara Global
-
-Sama seperti Laravel yang mendukung instalasi instan melalui global installer, Lumina Framework menyediakan **Lumina Installer** resmi (`cargo-lumina`) terintegrasi langsung sebagai modul internal toolchain Rust Anda.
-
-### 🌟 Cara Instalasi
-Cukup buka terminal/PowerShell Anda dari direktori mana saja, lalu pasang CLI installer secara global:
-```bash
-cargo install cargo-lumina
-```
-
----
-
-### 🔍 Verifikasi Instalasi CLI
-Setelah proses pemasangan selesai, pastikan CLI Lumina sudah aktif dan terdaftar dengan menjalankan perintah di bawah ini:
-```bash
-cargo lumina --help
-```
-*Lumina akan menampilkan antarmuka bantuan yang sangat premium dengan daftar perintah lengkap!*
-
----
-
-## 🆕 Langkah 2: Membuat Project Baru
-
-Setelah memasang Lumina Installer global, Anda dapat langsung membuat proyek baru Anda dengan satu perintah sederhana:
+Secara default, project ini menggunakan database **SQLite** (file lokal). Anda dapat langsung menjalankan server tanpa perlu setup database external:
 
 ```bash
-cargo lumina new nama_project_anda
-```
-
-### Apa yang terjadi di balik layar?
-Lumina secara otomatis me-generate seluruh kerangka kerja (scaffolding) MVC secara mandiri di komputer Anda:
-- 📁 Struktur folder lengkap (`src/app/controllers`, `src/app/models`, `resources/views`, dsb).
-- ⚙️ Konfigurasi `.env` dan `.env.example` yang siap pakai.
-- 📦 File dependensi `Cargo.toml` yang menunjuk ke core framework Lumina.
-- 🐙 Inisialisasi repositori Git baru.
-
----
-
-## 🏃 Langkah 3: Menjalankan Project
-
-Masuk ke folder project yang baru dibuat dan jalankan servernya:
-
-```bash
-cd nama_project_anda
 cargo run
 ```
 
-Buka browser Anda dan akses:
-👉 **[http://localhost:8000](http://localhost:8000)**
-
-Anda akan disambut oleh halaman **Welcome Lumina** dengan desain premium dan modern!
-
----
-
-## 🛠️ Langkah 4: Menggunakan Fitur CLI (Scaffolding Cepat)
-
-Semua perintah pembuatan fitur CLI dapat dijalankan di dalam direktori project Anda untuk mempercepat pengembangan:
-
-### A. Membuat Controller Baru
-```bash
-lumina make:controller ProductController
-```
-*Akan membuat file di `src/app/controllers/product_controller.rs` dan otomatis mendaftarkannya di `controllers/mod.rs`.*
-
-### B. Membuat Model & Migrasi Baru
-```bash
-lumina make:model Product
-lumina make:migration create_products_table
-```
-*Membuat model di `src/app/models/product.rs` dan file SQL migrasi di `database/migrations/`.*
-
-### C. Membuat CRUD Lengkap (Model, Controller, Migrasi, View, Rute & Menu)
-```bash
-lumina make:crud Book title:string price:integer description:text
-```
-*Ini adalah fitur ajaib Lumina! Perintah ini akan langsung menghasilkan seluruh halaman CRUD lengkap yang fungsional beserta form, tabel, sidebar menu, rute, controller, dan migrasi.*
-
-### D. Membuat Sistem Autentikasi Instan (Register & Login)
-```bash
-lumina make:auth
-```
-*Ini adalah fitur praktis Lumina untuk keamanan sistem! Hanya dengan satu perintah, CLI secara otomatis melakukan seluruh alur berikut tanpa konfigurasi manual:*
-* **Membuat Halaman View:** Menghasilkan file tampilan premium untuk form **Register** dan **Login** (`resources/views/auth/`).
-* **Membuat & Mendaftarkan Controller:** Menghasilkan file `src/app/controllers/auth_controller.rs` dan mendaftarkannya otomatis di `controllers/mod.rs`.
-* **Sinkronisasi Rute Pintar:** Mendeteksi berkas rute Anda (`routes/web.rs`), menghapus rute welcome statis yang lama, dan langsung menyuntikkan rute dinamis `GET` & `POST` lengkap untuk alur Login, Register, dan Logout.
-* **Integrasi Model User:** Memeriksa dan memperbarui model database `User` (`src/app/models/user.rs`) untuk menambahkan field `role` serta method verifikasi email bawaan.
-
-*Setelah perintah selesai dijalankan, Anda hanya perlu mengetik perintah `lumina migrate` untuk memastikan tabel database siap, lalu jalankan `lumina serve` untuk langsung menguji sistem autentikasi fungsional Anda!*
+Akses di browser atau API client Anda:
+- 🌐 **Web Dashboard (Laravel Style)**: [http://127.0.0.1:8000](http://127.0.0.1:8000)
+- ⚡ **Lumen-Style Headless JSON Spec**:
+  ```bash
+  curl -H "Accept: application/json" http://127.0.0.1:8000/
+  ```
+- 🩺 **Health Check Endpoint**: [http://127.0.0.1:8000/health](http://127.0.0.1:8000/health)
+- 🛣️ **REST API Base Path**: [http://127.0.0.1:8000/api](http://127.0.0.1:8000/api)
 
 ---
 
-## 🐳 Langkah 5: Fitur Deployment & Auto Host (Docker / Nginx / Supervisor)
+## 🗄️ Beralih ke PostgreSQL atau MySQL
 
-Lumina menyediakan automasi untuk deployment ke server produksi (auto-hosting/VPS) dengan standar industri:
+Lumina mendukung multi-driver database secara native. Cukup sesuaikan variabel di `.env`:
 
-### 1. Auto-Config Docker
-Jalankan perintah berikut di root project:
-```bash
-lumina make:docker
+### Contoh PostgreSQL:
+```env
+DB_CONNECTION=postgres
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=nama_db_kamu
+DB_USERNAME=postgres
+DB_PASSWORD=secret
+DATABASE_URL=postgres://postgres:secret@127.0.0.1:5432/nama_db_kamu
 ```
-*Akan menghasilkan file `Dockerfile` dan `docker-compose.yml` produksi yang terintegrasi dengan Nginx proxy, PostgreSQL, dan Redis.*
 
-Untuk menjalankannya secara kontainerisasi di VPS:
+### Jalankan Migrasi Database:
 ```bash
-docker-compose up -d --build
+lumina migrate
 ```
-
-### 2. Auto-Config Nginx Reverse Proxy
-Untuk mendeploy manual di server Ubuntu tanpa Docker:
-```bash
-lumina make:nginx
-```
-*Akan me-generate konfigurasi Nginx di folder `nginx/nginx.conf`. Cukup salin file ini ke `/etc/nginx/sites-available/` di VPS Anda.*
-
-### 3. Auto-Config Supervisor (Auto Restart Process)
-Agar server web Rust Anda selalu berjalan dan otomatis menyala kembali jika server restart atau crash:
-```bash
-lumina make:supervisor
-```
-*Akan menghasilkan file `supervisor/lumina.conf` yang siap Anda pasang di Supervisor daemon server VPS Anda.*
 
 ---
 
-## 📚 Ringkasan Perintah CLI Global (`lumina --help`)
+## 📁 Struktur Folder Proyek
 
-| Perintah | Deskripsi |
-| :--- | :--- |
-| `lumina new <name>` | Membuat project Lumina baru dari skeleton |
-| `lumina serve` | Menjalankan server aplikasi |
-| `lumina watch` | Menjalankan server dengan fitur auto-reload saat kode diubah |
-| `lumina make:controller <name>` | Membuat Controller baru dan mendaftarkannya otomatis |
-| `lumina make:model <name>` | Membuat Model database baru |
-| `lumina make:migration <name>` | Membuat file migrasi database SQL |
-| `lumina make:crud <name> [fields]`| Membuat halaman CRUD komplit secara instan |
-| `lumina make:auth` | Membuat sistem autentikasi siap pakai (Register & Login) |
-| `lumina migrate` | Menjalankan semua migrasi database yang belum diaplikasikan |
-| `lumina migrate:rollback` | Membatalkan migrasi terakhir |
-| `lumina db:seed` | Mengisi database dengan data dummy awal |
-| `lumina make:docker` | Membuat Dockerfile & docker-compose.yml produksi |
-| `lumina make:nginx` | Membuat konfigurasi Nginx reverse proxy produksi |
-| `lumina make:supervisor` | Membuat konfigurasi Supervisor daemon |
+```text
+├── Cargo.toml                  # Konfigurasi dependensi (Axum, Tokio, SQLx, Lumina)
+├── .env                        # Variabel environment (Database, App Secret, Port)
+├── src/
+│   ├── main.rs                 # Application entrypoint & HTTP server bootstrap
+│   ├── lib.rs                  # Module exports (app, routes) untuk modular testing
+│   ├── routes/
+│   │   ├── web.rs              # Route frontend / HTML views
+│   │   └── api.rs              # Route RESTful API (prefix /api)
+│   └── app/
+│       ├── controllers/        # Request handling & responses
+│       ├── models/             # Active Record models (#[derive(LuminaModel)])
+│       └── services/           # Business logic layer
+├── resources/views/            # Blade template views (.blade.rs)
+├── database/migrations/        # Migrasi skema database SQL
+└── tests/                      # Automated integration tests
+```
 
-Selamat berkarya dengan **Lumina Framework**! Jika ada pertanyaan atau kendala, silakan periksa file `README.md` pada project Anda atau buka dokumentasi resmi Lumina. 🦀✨
+---
+
+## 🦀 Selamat Berkarya dengan Lumina Framework!
+Dokumentasi lengkap dan update framework: [github.com/lumina-java/framework](https://github.com/lumina-java/framework)

@@ -1,16 +1,15 @@
-use lumina_framework::prelude::*;
+use lumina::prelude::*;
+use crate::app::controllers::welcome_controller::WelcomeController;
 
-pub fn register() -> Router<AppState> {
+//                            WEB ROUTING
+// Rute untuk web browser (HTML views, Blade templates, auth UI).
+
+pub fn router() -> Router<AppState> {
     Router::new()
-        .get("/", |state: AppState| async move {
-            state.view.render("welcome", serde_json::json!({
-                "app_name": "Lumina Framework",
-                "version": "0.1.0"
-            })).await
-        })
-        .get("/about", |state: AppState| async move {
-            state.view.render("about", serde_json::json!({
-                "app_name": "Lumina Framework"
-            })).await
-        })
+        // Halaman Utama Lumina (Dual Mode: HTML Dashboard di browser / JSON di API)
+        .get("/", WelcomeController::index)
+        
+        // Rute autentikasi
+        .get("/login", WelcomeController::login)
+        .get("/register", WelcomeController::register)
 }
